@@ -1,0 +1,38 @@
+# Import Aspect bazelrc presets
+# import %workspace%/.aspect/bazelrc/performance.bazelrc
+import %workspace%/.aspect/bazelrc/debug.bazelrc
+import %workspace%/.aspect/bazelrc/bazel6.bazelrc
+import %workspace%/.aspect/bazelrc/convenience.bazelrc
+import %workspace%/.aspect/bazelrc/correctness.bazelrc
+
+import %workspace%/.aspect/bazelrc/javascript.bazelrc
+build --strategy=TsProject=worker
+build --@aspect_rules_ts//ts:skipLibCheck=always
+fetch --@aspect_rules_ts//ts:skipLibCheck=always
+query --@aspect_rules_ts//ts:skipLibCheck=always
+
+# Some of our test code expects CI to be set.
+test --test_env=CI=1
+test --nozip_undeclared_test_outputs
+
+import %workspace%/bazel/bazelrc/java.bazelrc
+import %workspace%/bazel/bazelrc/kotlin.bazelrc
+
+build --watchfs
+# Sneak in DOCKER_AUTH_CONFIG
+build --stamp --workspace_status_command=./bazel/get_workspace_status_local.sh
+
+# Perform clippy checks
+build --aspects=@rules_rust//rust:defs.bzl%rust_clippy_aspect
+build --output_groups=+clippy_checks
+
+# CC toolchain
+build --incompatible_enable_cc_toolchain_resolution
+build --host_cxxopt=-std=c++14
+
+# Don't depend on a JAVA_HOME pointing at a system JDK in repo rules
+# see https://github.com/bazelbuild/rules_jvm_external/issues/445
+build --repo_env=JAVA_HOME=../bazel_tools/jdk
+
+try-import %workspace%/bazel/bazelrc/local.bazelrc
+

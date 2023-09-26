@@ -1,0 +1,8 @@
+node_modules
+services/docs/node_modules
+js/libs/nx-inventory/node_modules
+bazel-out
+bazel-bin
+bazel-next.js
+bazel-nx0
+bazel-testlogs

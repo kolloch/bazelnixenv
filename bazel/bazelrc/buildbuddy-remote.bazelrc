@@ -1,0 +1,15 @@
+import %workspace%/bazel/bazelrc/buildbuddy-results.bazelrc
+
+build --remote_cache=grpcs://remote.buildbuddy.io
+build --remote_timeout=150
+build --remote_executor=grpcs://remote.buildbuddy.io
+
+build --host_platform=@buildbuddy_toolchain//:platform
+build --platforms=@buildbuddy_toolchain//:platform
+build --extra_execution_platforms=@buildbuddy_toolchain//:platform
+build --extra_toolchains=@buildbuddy_toolchain//:ubuntu_cc_toolchain
+build --crosstool_top=@buildbuddy_toolchain//:ubuntu_cc_toolchain_suite
+
+build --jobs=16
+build --remote_upload_local_results=false
+build --nostamp --workspace_status_command=/bin/true

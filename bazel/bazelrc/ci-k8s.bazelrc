@@ -1,0 +1,6 @@
+# "Local" remote cache in cluster
+# https://github.com/buchgr/bazel-remote#experimental-remote-asset-api-support
+# build --experimental_remote_downloader=grpc://bazel-cache:9092
+build --remote_cache=grpc://bazel-cache:9092
+common --watchfs
+

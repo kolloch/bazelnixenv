@@ -1,0 +1,83 @@
+load("@io_bazel_rules_kotlin//kotlin:core.bzl", "define_kt_toolchain")
+load("@bazel_gazelle//:def.bzl", "DEFAULT_LANGUAGES", "gazelle", "gazelle_binary")
+load("@com_github_ash2k_bazel_tools//buildozer:def.bzl", "buildozer")
+load("@aspect_rules_js//js:defs.bzl", "js_library")
+load("@aspect_rules_ts//ts:defs.bzl", "ts_config")
+load("@npm//:defs.bzl", "npm_link_all_packages")
+load("@npm//:next/package_json.bzl", next_bin = "bin")
+load("@bazel_skylib//lib:partial.bzl", "partial")
+load("@aspect_rules_swc//swc:defs.bzl", "swc")
+load("@rules_oci//oci:defs.bzl", "oci_image")
+load("@rules_python_gazelle_plugin//:def.bzl", "GAZELLE_PYTHON_RUNTIME_DEPS")
+
+define_kt_toolchain(
+    name = "kotlin_toolchain",
+    api_version = "1.7",  # "1.1", "1.2", "1.3", "1.4", "1.5" "1.6", or "1.7"
+    jvm_target = "17",  # "1.6", "1.8", "9", "10", "11", "12", "13", "15", "16", or "17"
+    language_version = "1.7",  # "1.1", "1.2", "1.3", "1.4", "1.5" "1.6", or "1.7"
+)
+
+# disable generation of go_proto_libary rules
+# gazelle:go_generate_proto false
+
+# group multiple proto files by "package"
+# gazelle:proto package
+
+# gazelle:lang proto,java
+
+gazelle(
+    name = "gazelle",
+    data = GAZELLE_PYTHON_RUNTIME_DEPS,
+    gazelle = ":gazelle_bin",
+)
+
+gazelle_binary(
+    name = "gazelle_bin",
+    languages = DEFAULT_LANGUAGES + [
+        "@rules_python_gazelle_plugin//python",
+        "@contrib_rules_jvm//java/gazelle",
+    ],
+)
+
+# platform(
+#     name = "docker_image_platform",
+#     constraint_values = [
+#         "@platforms//os:linux",
+#         "@platforms//cpu:x86_64",
+#     ],
+#     exec_properties = {
+#         "OSFamily": "Linux",
+#         # FIXME: Random container image with recent glib and gcc installed.
+#         "container-image": "docker://gcr.io/bazel-public/bazel:6.3.1",
+#     },
+# )
+
+npm_link_all_packages(name = "node_modules")
+
+next_bin.next_binary(
+    name = "next_js_binary",
+    visibility = ["//visibility:public"],
+)
+
+ts_config(
+    name = "tsconfig",
+    src = "tsconfig.json",
+    visibility = ["//visibility:public"],
+)
+
+js_library(
+    name = "eslintrc",
+    srcs = [".eslintrc.json"],
+    visibility = ["//visibility:public"],
+)
+
+js_library(
+    name = "jest_config",
+    srcs = ["jest.config.js"],
+    visibility = ["//visibility:public"],
+)
+
+oci_image(
+    name = "java_base_image",
+    base = "@java_base_image",
+)

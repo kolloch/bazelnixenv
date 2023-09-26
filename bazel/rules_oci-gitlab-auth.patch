@@ -1,0 +1,17 @@
+diff --git a/oci/private/pull.bzl b/oci/private/pull.bzl
+index 62f4197..f4a2ffb 100644
+--- a/oci/private/pull.bzl
++++ b/oci/private/pull.bzl
+@@ -54,6 +54,12 @@ _WWW_AUTH = {
+         "service": "cgr.dev",
+         "scope": "repository:{repository}:pull",
+     },
++    # www-authenticate: Bearer realm="https://gitlab.com/jwt/auth",service="container_registry",scope="repository:name/devops/persistence/test/base-image:pull"
++    "registry.gitlab.com": {
++        "realm": "gitlab.com/jwt/auth",
++        "scope": "repository:{repository}:pull",
++        "service": "container_registry",
++    },
+ }
+ 
+ def _strip_host(url):

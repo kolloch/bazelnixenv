@@ -1,0 +1,72 @@
+[workspace]
+members = [
+    "rust/hello"
+]
+
+[workspace.dependencies]
+# Error handling
+eyre = "0.6"
+thiserror = "1"
+color-eyre = "0.6"
+
+# CLI
+structopt = "0.3"
+glob = "0.3"
+ignore = "0.4"
+indicatif = "0.17"
+
+# basic libs
+lazy_static = "1"
+rand = "0.8"
+
+# Hashing / Crypto
+sha2 = "0.10"
+openssl = "0.10"
+
+# Text
+regex = "1"
+const_format = "0.2"
+indoc = "2"
+strum = "0.25"
+strum_macros = "0.25"
+tera = "1"
+indenter = "0.3"
+
+# complex value types
+chrono = { version = "0.4", features = ["serde"] }
+url = { version = "2", features = ["serde"] }
+uuid = { version = "1", features = ["v4", "serde"] }
+semver = { version = "1" }
+
+# Serialization
+serde = { version = "=1.0.188", features = ["derive"] }
+serde_json = "1"
+serde_yaml = "0.9"
+urlencoding = "2"
+base64 = "0.21"
+schemars = { version = "0.8", features = ["preserve_order", "chrono"] }
+
+# async
+futures = "0.3"
+async-trait = "0.1"
+async_once = "0.2"
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "signal", "time", "parking_lot"] }
+
+# Executing shell snippets
+duct = "0.13"
+
+ctor = "0.2"
+tempfile = "3"
+
+# HTTP
+reqwest = { version = "0.11", features = ["json", "rustls-tls"], default-features = false }
+
+dotenvy = "0.15"
+
+tracing = "0.1"
+tracing-futures = { version = "0.2", features = ["tokio", "futures-03", "std-future"]}
+tracing-subscriber = { version = "0.3", features = ["registry", "env-filter", "json"]}
+tracing-log = "0.1"
+# must match color-eye version
+tracing-error = "0.2"
+

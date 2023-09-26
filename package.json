@@ -1,0 +1,34 @@
+{
+  "name": "nx0",
+  "private": true,
+  "scripts": {
+    "dev": "ibazel run //services/docs:next_dev",
+    "build": "bazel build //services/docs:next",
+    "export": "bazel build //services/docs:next_export",
+    "start": "ibazel run //services/docs:next_start",
+    "lint": "bazel test //services/docs/... --test_tag_filters=lint --build_tests_only",
+    "test": "bazel test //services/docs/... --test_tag_filters=jest --build_tests_only"
+  },
+  "dependencies": {
+    "next": "13.4.19",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@bazel/ibazel": "0.16.2",
+    "@testing-library/jest-dom": "4.2.4",
+    "@testing-library/react": "13.4.0",
+    "@types/jest": "29.2.3",
+    "@types/node": "18.11.9",
+    "@types/react": "18.0.25",
+    "@types/react-dom": "18.0.9",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "eslint": "8.28.0",
+    "eslint-config-next": "13.4.19",
+    "jest-cli": "29.5.0",
+    "jest-environment-jsdom": "29.5.0",
+    "jest-junit": "16.0.0",
+    "jest-transform-stub": "2.0.0",
+    "typescript": "4.9.3"
+  }
+}

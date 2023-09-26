@@ -1,0 +1,38 @@
+diff --git a/coursier.bzl b/coursier.bzl
+index 51648d2..292fa09 100644
+--- a/coursier.bzl
++++ b/coursier.bzl
+@@ -313,11 +313,14 @@ def get_netrc_lines_from_entries(netrc_entries):
+ def get_home_netrc_contents(repository_ctx):
+     # Copied with a ctx -> repository_ctx rename from tools/build_defs/repo/http.bzl's _get_auth.
+     # Need to keep updated with improvements in source since we cannot load private methods.
+-    if "HOME" in repository_ctx.os.environ:
++    netrcfile = None
++    if "NETRC" in repository_ctx.os.environ:
++        netrcfile = repository_ctx.os.environ["NETRC"]
++    elif "HOME" in repository_ctx.os.environ:
+         if not repository_ctx.os.name.startswith("windows"):
+             netrcfile = "%s/.netrc" % (repository_ctx.os.environ["HOME"],)
+-            if _is_file(repository_ctx, netrcfile):
+-                return repository_ctx.read(netrcfile)
++    if _is_file(repository_ctx, netrcfile):
++        return repository_ctx.read(netrcfile)
+     return ""
+ 
+ def _add_outdated_files(repository_ctx, artifacts, repositories):
+@@ -1221,6 +1224,7 @@ pinned_coursier_fetch = repository_rule(
+         ),
+     },
+     implementation = _pinned_coursier_fetch_impl,
++    environ = ["NETRC"],
+ )
+ 
+ coursier_fetch = repository_rule(
+@@ -1290,6 +1294,7 @@ coursier_fetch = repository_rule(
+         "https_proxy",
+         "HTTPS_PROXY",
+         "no_proxy",
++        "NETRC",
+         "NO_PROXY",
+         "COURSIER_CACHE",
+         "COURSIER_OPTS",

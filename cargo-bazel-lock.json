@@ -1,0 +1,25 @@
+{
+  "checksum": "0bc9de8face083b876ce6a5b03984f7e29b04a767f1569cfa4c3fef5fe95350f",
+  "crates": {
+    "hello 0.1.0": {
+      "name": "hello",
+      "version": "0.1.0",
+      "repository": null,
+      "targets": [],
+      "library_target_name": null,
+      "common_attrs": {
+        "compile_data_glob": [
+          "**"
+        ],
+        "edition": "2021",
+        "version": "0.1.0"
+      },
+      "license": null
+    }
+  },
+  "binary_crates": [],
+  "workspace_members": {
+    "hello 0.1.0": "rust/hello"
+  },
+  "conditions": {}
+}

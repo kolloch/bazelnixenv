@@ -1,0 +1,13 @@
+# Hermetic java
+build --java_runtime_version=remotejdk_17
+build --tool_java_runtime_version=remotejdk_17
+test --java_runtime_version=remotejdk_17
+test --tool_java_runtime_version=remotejdk_17
+run --java_runtime_version=remotejdk_17
+run --tool_java_runtime_version=remotejdk_17
+
+# https://github.com/bazelbuild/bazel/issues/3236#issuecomment-587752609
+# https://github.com/raphw/byte-buddy/issues/1111#issuecomment-922459025
+build --sandbox_tmpfs_path=/tmp
+
+#test --jvmopt=-Djdk.attach.allowAttachSelf=true
