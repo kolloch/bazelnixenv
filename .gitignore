@@ -130,3 +130,14 @@ rust-project.json
 node_modules
 /.pnp
 .pnp.js
+
+# Devenv
+.devenv*
+devenv.local.nix
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml
+
