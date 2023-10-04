@@ -2,6 +2,7 @@
 members = [
     "rust/hello"
 ]
+resolver = "2"
 
 [workspace.dependencies]
 # Error handling

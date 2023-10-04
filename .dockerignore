@@ -1,0 +1,12 @@
+*
+!WORKSPACE
+!BUILD.bazel
+!bazel
+!tools
+!rust
+!.aspect
+!.bazel*
+!Cargo.*
+!cargo-bazel-lock.json
+!pnpm*.yaml
+!maven_install.json

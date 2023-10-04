@@ -1,0 +1,19 @@
+{
+  "customizations": {
+    "vscode": {
+      "extensions": ["mkhl.direnv"]
+    }
+  },
+  "image": "ghcr.io/cachix/devenv:latest",
+  "privileged": true,
+  "overrideCommand": false,
+  "updateContentCommand": "devenv shell </dev/null",
+  "mounts": [
+    "source=${localEnv:HOME}/.aws,target=/home/vscode/.aws,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.docker,target=/home/vscode/.docker,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.kube,target=/home/vscode/.kube,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.netrc,target=/home/vscode/.netrc,type=bind,consistency=cached",
+    "source=${localWorkspaceFolderBasename}-bazel-cache,target=/home/vscode/bazel-cache,type=volume",
+    "source=${localWorkspaceFolderBasename}-npm,target=/home/vscode/.npm,type=volume"
+  ]
+}
